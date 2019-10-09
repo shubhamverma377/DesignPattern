@@ -14,7 +14,7 @@ public class SingletonSession {
         //else return stored instance
         if (instance == null)
         {
-            instance = new SingletonSession();
+            instance = new SingletonSession();xlxxl
         }
         return instance;
     }

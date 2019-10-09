@@ -1,0 +1,111 @@
+/**
+ * If you are familiar with factory design pattern in java, you will notice that we have a single Factory class.
+ * This factory class returns different subclasses based on the input provided and factory class uses 4
+ * if-else or switch statement to achieve this.
+ */
+
+/**
+ * now we have already create super clas and sub class sp let's begin with factoy class
+ *
+ */
+
+//Abstract factory class
+
+package com.journaldev.design.abstractfactory;
+
+import com.journaldev.design.model.Computer;
+
+public interface ComputerAbstractFactory {
+
+    public Computer createComputer();
+
+}
+
+//Factory Class for Each subclass
+package com.journaldev.design.abstractfactory;
+
+import com.journaldev.design.model.Computer;
+import com.journaldev.design.model.PC;
+
+public class PCFactory implements ComputerAbstractFactory {
+
+    private String ram;
+    private String hdd;
+    private String cpu;
+
+    public PCFactory(String ram, String hdd, String cpu){
+        this.ram=ram;
+        this.hdd=hdd;
+        this.cpu=cpu;
+    }
+    @Override
+    public Computer createComputer() {
+        return new PC(ram,hdd,cpu);
+    }
+
+}
+//factory class for ServerFactory
+package com.journaldev.design.abstractfactory;
+
+import com.journaldev.design.model.Computer;
+import com.journaldev.design.model.Server;
+
+public class ServerFactory implements ComputerAbstractFactory {
+
+    private String ram;
+    private String hdd;
+    private String cpu;
+
+    public ServerFactory(String ram, String hdd, String cpu){
+        this.ram=ram;
+        this.hdd=hdd;
+        this.cpu=cpu;
+    }
+
+    @Override
+    public Computer createComputer() {
+        return new Server(ram,hdd,cpu);
+    }
+
+}
+
+/**now we will create a consumer class that will provide the entry point for the client classes to
+// create sub-classes.
+ */
+package com.journaldev.design.abstractfactory;
+
+import com.journaldev.design.model.Computer;
+
+public class ComputerFactory {
+
+    public static Computer getComputer(ComputerAbstractFactory factory){
+        return factory.createComputer();
+    }
+}
+/**
+ * Let’s write a simple test method and see how to use the abstract factory to get the instance of sub-classes
+ */
+
+package com.journaldev.design.test;
+
+import com.journaldev.design.abstractfactory.PCFactory;
+import com.journaldev.design.abstractfactory.ServerFactory;
+import com.journaldev.design.factory.ComputerFactory;
+import com.journaldev.design.model.Computer;
+
+public class TestDesignPatterns {
+
+    public static void main(String[] args) {
+        testAbstractFactory();
+    }
+
+    private static void testAbstractFactory() {
+        Computer pc = com.journaldev.design.abstractfactory.ComputerFactory.getComputer(new PCFactory("2 GB","500 GB","2.4 GHz"));
+        Computer server = com.journaldev.design.abstractfactory.ComputerFactory.getComputer(new ServerFactory("16 GB","1 TB","2.9 GHz"));
+        System.out.println("AbstractFactory PC Config::"+pc);
+        System.out.println("AbstractFactory Server Config::"+server);
+    }
+}
+
+
+
